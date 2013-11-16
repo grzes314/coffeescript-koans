@@ -17,14 +17,16 @@ describe 'About Applying What We Have Learnt', ->
           break
       return hasInvalidOperation
 
-    expect(findNeedle(operations)).toBe(FILL_ME_IN)
+    expect(findNeedle(operations)).toBe(true)
 
 
   it 'should find needle in a haystack (functional)', ->
+    isInvalid = (op, acc) -> (op.direction == 'FWD' && op.distance > 100) || acc
+    findNeedle = (arr) -> arr.reduce isInvalid, false
     # FILL_ME_IN solution goes in here
     # HINT: one way of doing this would be a 'for in when' construct using sum and
     # filter functions, the existential operator is also useful
-    (expect findNeedle(operations)).toBe(FILL_ME_IN)
+    (expect findNeedle(operations)).toBe(true)
 
 
   it 'should add all the natural numbers below 1000 that are multiples of 3 or 5 (imperative)', ->
@@ -32,14 +34,17 @@ describe 'About Applying What We Have Learnt', ->
     for i in [1..1000]
       if (i % 3 == 0 || i % 5 == 0)
         total += i
-    expect(total).toBe(FILL_ME_IN)
+    expect(total).toBe(234168)
 
 
   it 'should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)', ->
     # FILL_ME_IN solution goes in here
     # HINT: one way of doing this would be a 'for in when' construct using sum and
     # filter functions
-    (expect FILL_ME_IN).toBe(234168)
+    validNum = (i) -> i % 3 == 0 || i % 5 == 0
+    arr = [1..1000]
+    expect(arr.reduce ((acc, num) -> console.log(num); if validNum(num) then  num + acc else acc), 0)
+          .toBe(234168)
 
 
   it 'should find the sum of all the even valued terms in the fibonacci sequence which do not exceed four million (imperative)', ->
@@ -55,14 +60,17 @@ describe 'About Applying What We Have Learnt', ->
         sum += currentFib
       i+=1
 
-    expect(sum).toBe(FILL_ME_IN)
+    expect(sum).toBe(4613732)
 
 
   it 'should find the sum of all the even valued terms in the fibonacci sequence which do not exceed four million (functional)', ->
     # FILL_ME_IN solution goes in here
     # HINT: one way of doing this would be to construct an array of Fibonacci numbers
     # using a function and a while loop, and then to filter it using an even function
-    expect(FILL_ME_IN).toBe(4613732)
+    sum = (s,b,acc) ->
+      if (b > 4e6) then acc else (
+        if b % 2 == 0 then sum(b, s+b, acc + b) else sum(b, s+b, acc) )
+    expect(sum(0,1,0)).toBe(4613732)
 
 
 ###
